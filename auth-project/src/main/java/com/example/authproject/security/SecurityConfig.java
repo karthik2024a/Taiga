@@ -23,7 +23,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http)
+            throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
@@ -38,33 +39,17 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-                // Public authentication APIs
-                .requestMatchers(
-                    "/api/auth/**"
-                ).permitAll()
+                // LOGIN + REGISTER
+                .requestMatchers("/api/auth/**").permitAll()
 
-                // Protected APIs
-                .requestMatchers(
-                    "/api/projects/**"
-                ).authenticated()
+                // PROTECTED APIs
+                .requestMatchers("/api/projects/**").authenticated()
+                .requestMatchers("/api/sprints/**").authenticated()
+                .requestMatchers("/api/tasks/**").authenticated()
+                .requestMatchers("/api/issues/**").authenticated()
+                .requestMatchers("/api/timelogs/**").authenticated()
 
-                .requestMatchers(
-                    "/api/sprints/**"
-                ).authenticated()
-
-                .requestMatchers(
-                    "/api/tasks/**"
-                ).authenticated()
-
-                .requestMatchers(
-                    "/api/issues/**"
-                ).authenticated()
-
-                .requestMatchers(
-                    "/api/timelogs/**"
-                ).authenticated()
-
-                // Everything else
+                // EVERYTHING ELSE
                 .anyRequest().authenticated()
             )
 
@@ -83,8 +68,9 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config
-    ) throws Exception {
+            AuthenticationConfiguration config)
+            throws Exception {
+
         return config.getAuthenticationManager();
     }
 }
