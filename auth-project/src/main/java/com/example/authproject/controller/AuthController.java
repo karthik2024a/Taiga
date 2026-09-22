@@ -18,7 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "https://taiga-frontend.vercel.app/")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     private final AuthService authService;
