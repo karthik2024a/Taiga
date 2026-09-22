@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -29,28 +27,59 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+
             .cors(cors -> {})
+
             .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                session.sessionCreationPolicy(
+                    SessionCreationPolicy.STATELESS
+                )
             )
+
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()   // ✅ LOGIN / REGISTER
-                .requestMatchers("/api/projects/**").authenticated()
-                .requestMatchers("/api/sprints/**").authenticated()
-                .requestMatchers("/api/tasks/**").authenticated()
-                .requestMatchers("/api/issues/**").authenticated()
-                .requestMatchers("/api/timelogs/**").authenticated()
-                .anyRequest().authenticated()                  // ✅ EVERYTHING ELSE NEEDS JWT
+
+                // Public authentication APIs
+                .requestMatchers(
+                    "/api/auth/**"
+                ).permitAll()
+
+                // Protected APIs
+                .requestMatchers(
+                    "/api/projects/**"
+                ).authenticated()
+
+                .requestMatchers(
+                    "/api/sprints/**"
+                ).authenticated()
+
+                .requestMatchers(
+                    "/api/tasks/**"
+                ).authenticated()
+
+                .requestMatchers(
+                    "/api/issues/**"
+                ).authenticated()
+
+                .requestMatchers(
+                    "/api/timelogs/**"
+                ).authenticated()
+
+                // Everything else
+                .anyRequest().authenticated()
             )
-            .sessionManagement(session ->
-            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+            .addFilterBefore(
+                jwtFilter,
+                UsernamePasswordAuthenticationFilter.class
+            );
 
         return http.build();
     }
 
-    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(
@@ -58,6 +87,4 @@ public class SecurityConfig {
     ) throws Exception {
         return config.getAuthenticationManager();
     }
-    
-   
 }
