@@ -34,7 +34,9 @@ public class CorsConfig {
         ));
 
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+
+        // Your JWT is stored in localStorage, so cookies are not required.
+        config.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
