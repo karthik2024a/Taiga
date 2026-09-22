@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
-@CrossOrigin(origins = "http://localhost:5176")
+@CrossOrigin(origins = "*")
 public class DashboardController {
 
     @GetMapping("/stats")
