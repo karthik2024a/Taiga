@@ -16,18 +16,21 @@ public class CorsConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        // ✅ Allow frontend
         config.setAllowedOrigins(List.of(
             "http://localhost:5173",
             "http://localhost:5174",
             "http://localhost:5175",
             "http://localhost:5176",
             "http://localhost:5177",
-            "https://taiga-frontend.vercel.app/"
+            "https://taiga-frontend.vercel.app"
         ));
 
         config.setAllowedMethods(List.of(
-            "GET", "POST", "PUT", "DELETE", "OPTIONS"
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "OPTIONS"
         ));
 
         config.setAllowedHeaders(List.of("*"));
