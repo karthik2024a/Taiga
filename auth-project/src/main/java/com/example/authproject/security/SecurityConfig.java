@@ -41,6 +41,7 @@ public class SecurityConfig {
 
                 // LOGIN + REGISTER
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/").permitAll()
 
                 // PROTECTED APIs
                 .requestMatchers("/api/projects/**").authenticated()
