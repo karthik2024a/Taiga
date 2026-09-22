@@ -22,7 +22,8 @@ public class CorsConfig {
             "http://localhost:5174",
             "http://localhost:5175",
             "http://localhost:5176",
-            "http://localhost:5177"
+            "http://localhost:5177",
+            "https://taiga-frontend.vercel.app/"
         ));
 
         config.setAllowedMethods(List.of(
